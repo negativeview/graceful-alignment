@@ -22,7 +22,7 @@ Hooks.on(
         let alignX = {
             name: "alignX",
             title: game.i18n.localize("gracefulalignment.name"),
-            icon: "fas arrow-down-right-from-square",
+            icon: "fa fa-route",
             // Other options I am considering:
             // sort (used in another tab for elevation), arrow-up-right-from-square (would be better down right), route, repeat, clone, turn down, shuffle, right-left
             toggle: false,
