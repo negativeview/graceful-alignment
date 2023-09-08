@@ -1,0 +1,36 @@
+{
+    "id": "graceful-alignment",
+    "title": "Graceful Alignment",
+    "description": "Quick and easy way to align multiple scene elements mathematically.",
+    "version": "1.0.0",
+    "compatibility": {
+      "minimum": "11",
+      "verified": "11",
+      "maximum": "11"
+    },
+    "download": "https://github.com/negativeview/daniels-data/archive/refs/heads/main.zip",
+    "url": "https://github.com/negativeview/daniels-data",
+    "manifest": "https://raw.githubusercontent.com/negativeview/daniels-data/main/module.json",
+    "esmodules": [
+        "/src/main.js"
+    ],
+    "scripts": [
+      "/src/main.js"
+    ],
+    "languages": [
+        {
+            "lang": "en",
+            "name": "English",
+            "path": "lang/en.json"
+        }
+    ],
+    "authors": [
+      {
+        "id": "Daniel Grace",
+        "discord": "negativeview",
+        "email": "dgrace@gracefulcode.com",
+        "url": "https://www.gracefulcode.com"
+      }
+    ],
+    "readme": "README.md"
+  }
