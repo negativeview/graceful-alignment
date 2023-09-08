@@ -17,7 +17,7 @@ function handleGeneric(base, offset, key, sorted, updates) {
 }
 
 function handleX(baseX, offsetX, sorted, updates) {
-    handleGeneric(base, offset, 'x', sorted, updates);
+    handleGeneric(baseX, offsetX, 'x', sorted, updates);
 }
 
 Hooks.on(
