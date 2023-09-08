@@ -10,14 +10,10 @@ function handleGeneric(base, offset, key, sorted, updates) {
 
     sorted.forEach((element, idx) => {
         let newElement = {};
-        newElement[key] = base * (isNaN(offset) ? 0 : offset) * idx;
+        newElement[key] = base + (isNaN(offset) ? 0 : offset) * idx;
 
         updates[element._id] = mergeObject(updates[element._id], newElement);
     })
-}
-
-function handleX(baseX, offsetX, sorted, updates) {
-    handleGeneric(baseX, offsetX, 'x', sorted, updates);
 }
 
 Hooks.on(
@@ -66,11 +62,11 @@ Hooks.on(
                         callback: (html) => {
                             return {
                                 baseX: parseInt(html.find('#base-x').val()),
-                                baseY: html.find('#base-y').val(),
+                                baseY: parseInt(html.find('#base-y').val()),
                                 offsetX: parseInt(html.find('#offset-x').val()),
-                                offsetY: html.find('#offset-y').val(),
-                                width: html.find('#width').val(),
-                                height: html.find('#height').val()
+                                offsetY: parseInt(html.find('#offset-y').val()),
+                                width: parseInt(html.find('#width').val()),
+                                height: parseInt(html.find('#height').val())
                             };
                         }
                     });
@@ -106,47 +102,31 @@ Hooks.on(
                         };
                     });
 
-                    handleX(myValue['baseX'], myValue['offsetX'], sortedByXThenY, updates);
+                    handleGeneric(myValue['baseX'], myValue['offsetX'], 'x', sortedByXThenY, updates);
+                    handleGeneric(myValue['baseY'], myValue['offsetY'], 'y', sortedByYThenX, updates);
 
-                    if (!isNaN(parseInt(myValue['baseY']))) {
-                        const baseY = parseInt(myValue['baseY']);
-                        const offsetY = parseInt(myValue['offsetY']);
-
-                        sortedByYThenX.forEach(
-                            (element, idx) => {
-                                updates[element._id] = mergeObject(
-                                    updates[element._id],
-                                    {
-                                        y: baseY + (isNaN(offsetY) ? 0 : offsetY) * idx
-                                    }
-                                );
-                            }
-                        )
-                    }
-
-                    if (!isNaN(parseInt(myValue['width']))) {
+                    if (!isNaN(myValue['width'])) {
                         unsortedElements.forEach((element) => {
                             updates[element._id] = mergeObject(
                                 updates[element._id],
                                 {
-                                    width: parseInt(myValue['width'])
+                                    width: myValue['width']
                                 }
                             );
                         });
                     }
 
-                    if (!isNaN(parseInt(myValue['height']))) {
+                    if (!isNaN(myValue['height'])) {
                         unsortedElements.forEach((element) => {
                             updates[element._id] = mergeObject(
                                 updates[element._id],
                                 {
-                                    height: parseInt(myValue['height'])
+                                    height: myValue['height']
                                 }
                             );
                         });
                     }
 
-                    console.log(updates);
                     canvas.scene.updateEmbeddedDocuments('Drawing', Object.values(updates));
                 });
             },
