@@ -1,34 +1,23 @@
-function handleX(baseX, offsetX, sorted, updates) {
-    if (isNaN(baseX) && isNaN(offsetX)) return;
+function handleGeneric(base, offset, key, sorted, updates) {
+    if (isNaN(base) && isNaN(offset)) return;
     if (sorted.length == 0) return;
 
     // We are trying to use an offset, but do not have a base. Find our implied base.
-    if (!isNaN(offsetX) && isNaN(baseX)) {
+    if (!isNaN(offset) && isNaN(base)) {
         const baseElement = sorted[0];
-        baseX = baseElement.x;
+        base = baseElement[key];
     }
 
-    if (isNaN(offsetX)) {
-        // No offset, just set them all to the same value.
-        sorted.forEach((element) => {
-            updates[element._id] = mergeObject(
-                updates[element._id],
-                {
-                    x: baseX
-                }
-            )
-        });
-    } else {
-        // Offset, start at base and offset each new one.
-        sorted.forEach((element, idx) => {
-            updates[element._id] = mergeObject(
-                updates[element._id],
-                {
-                    x: baseX + offsetX * idx
-                }
-            )
-        });
-    }
+    sorted.forEach((element, idx) => {
+        let newElement = {};
+        newElement[key] = base * (isNaN(offset) ? 0 : offset) * idx;
+
+        updates[element._id] = mergeObject(updates[element._id], newElement);
+    })
+}
+
+function handleX(baseX, offsetX, sorted, updates) {
+    handleGeneric(base, offset, 'x', sorted, updates);
 }
 
 Hooks.on(
@@ -37,7 +26,7 @@ Hooks.on(
         let alignX = {
             name: "alignX",
             title: game.i18n.localize("gracefulalignment.name"),
-            icon: "fas code-compare",
+            icon: "fas arrow-down-right-from-square",
             // Other options I am considering:
             // sort (used in another tab for elevation), arrow-up-right-from-square (would be better down right), route, repeat, clone, turn down, shuffle, right-left
             toggle: false,
