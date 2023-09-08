@@ -14,9 +14,6 @@
     "esmodules": [
         "/src/main.js"
     ],
-    "scripts": [
-      "/src/main.js"
-    ],
     "languages": [
         {
             "lang": "en",
