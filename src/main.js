@@ -1,3 +1,36 @@
+function handleX(baseX, offsetX, sorted, updates) {
+    if (isNaN(baseX) && isNaN(offsetX)) return;
+    if (sorted.length == 0) return;
+
+    // We are trying to use an offset, but do not have a base. Find our implied base.
+    if (!isNaN(offsetX) && isNaN(baseX)) {
+        const baseElement = sorted[0];
+        baseX = baseElement.x;
+    }
+
+    if (isNaN(offsetX)) {
+        // No offset, just set them all to the same value.
+        sorted.forEach((element) => {
+            updates[element._id] = mergeObject(
+                updates[element._id],
+                {
+                    x: baseX
+                }
+            )
+        });
+    } else {
+        // Offset, start at base and offset each new one.
+        sorted.forEach((element, idx) => {
+            updates[element._id] = mergeObject(
+                updates[element._id],
+                {
+                    x: baseX + offsetX * idx
+                }
+            )
+        });
+    }
+}
+
 Hooks.on(
     'getSceneControlButtons',
     (controls, b, c) => {
@@ -43,9 +76,9 @@ Hooks.on(
                         `,
                         callback: (html) => {
                             return {
-                                baseX: html.find('#base-x').val(),
+                                baseX: parseInt(html.find('#base-x').val()),
                                 baseY: html.find('#base-y').val(),
-                                offsetX: html.find('#offset-x').val(),
+                                offsetX: parseInt(html.find('#offset-x').val()),
                                 offsetY: html.find('#offset-y').val(),
                                 width: html.find('#width').val(),
                                 height: html.find('#height').val()
@@ -84,21 +117,7 @@ Hooks.on(
                         };
                     });
 
-                    if (!isNaN(parseInt(myValue['baseX']))) {
-                        const baseX = parseInt(myValue['baseX']);
-                        const offsetX = parseInt(myValue['offsetX']);
-
-                        sortedByXThenY.forEach(
-                            (element, idx) => {
-                                updates[element._id] = mergeObject(
-                                    updates[element._id],
-                                    {
-                                        x: baseX + (isNaN(offsetX) ? 0 : offsetX) * idx
-                                    }
-                                );
-                            }
-                        )
-                    }
+                    handleX(myValue['baseX'], myValue['offsetX'], sortedByXThenY, updates);
 
                     if (!isNaN(parseInt(myValue['baseY']))) {
                         const baseY = parseInt(myValue['baseY']);
