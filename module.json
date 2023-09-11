@@ -8,7 +8,7 @@
       "verified": "11",
       "maximum": "11"
     },
-    "download": "https://github.com/negativeview/graceful-alignment/archive/refs/v1.0.0/main.zip",
+    "download": "https://github.com/negativeview/graceful-alignment/archive/refs/tags/v1.0.0.zip",
     "url": "https://github.com/negativeview/graceful-alignment",
     "manifest": "https://raw.githubusercontent.com/negativeview/graceful-alignment/v1.0.0/module.json",
     "esmodules": [
