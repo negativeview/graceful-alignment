@@ -30,7 +30,7 @@ Hooks.on(
             onClick: async (toggle) => {
                 return new Promise(async (resolve, reject) => {
                     const template = await renderTemplate(
-                        'modules/graceful-alignment/templates/main-dialog.hbs',
+                        'modules/gracefulalignment/templates/main-dialog.hbs',
                         {
                             firstW: '100px',
                             secondW: '16px',
