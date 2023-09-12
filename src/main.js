@@ -28,37 +28,18 @@ Hooks.on(
             toggle: false,
             active: false,
             onClick: async (toggle) => {
-                let firstW = '100px';
-                let secondW = '16px';
-                let thirdW = '16px';
-
                 return new Promise(async (resolve, reject) => {
+                    const template = await renderTemplate(
+                        'modules/graceful-alignment/templates/main-dialog.hbs',
+                        {
+                            firstW: '100px',
+                            secondW: '16px',
+                            thirdW: '16px'
+                        }
+                    );
                     let myValue = await Dialog.prompt({
                         title: game.i18n.localize("gracefulalignment.name"),
-                        content: `
-                            <div style="margin-bottom: 10px;">
-                                <div style="display: flex;">
-                                    <div style="flex: 0 0 ${firstW};"></div>
-                                    <div style="flex: 1 0 ${secondW};">X</div>
-                                    <div style="flex: 1 0 ${thirdW};">Y</div>
-                                </div>
-                                <div style="display: flex;">
-                                    <div style="flex: 0 0 ${firstW}">${game.i18n.localize("gracefulalignment.base")}</div>
-                                    <div style="flex: 1 0 ${secondW};"><input type="text" id="base-x" /></div>
-                                    <div style="flex: 1 0 ${thirdW};"><input type="text" id="base-y" /></div>
-                                </div>
-                                <div style="display: flex;">
-                                    <div style="flex: 0 0 ${firstW}">${game.i18n.localize("gracefulalignment.offset")}</div>
-                                    <div style="flex: 1 0 ${secondW};"><input type="text" id="offset-x" /></div>
-                                    <div style="flex: 1 0 ${thirdW};"><input type="text" id="offset-y" /></div>
-                                </div>
-                                <div style="display: flex;">
-                                    <div style="flex: 0 0 ${firstW}">${game.i18n.localize("gracefulalignment.size")}</div>
-                                    <div style="flex: 1 0 ${secondW};"><input type="text" id="width" /></div>
-                                    <div style="flex: 1 0 ${thirdW};"><input type="text" id="height" /></div>
-                                </div>
-                            </div>
-                        `,
+                        content: template,
                         callback: (html) => {
                             return {
                                 baseX: parseInt(html.find('#base-x').val()),
