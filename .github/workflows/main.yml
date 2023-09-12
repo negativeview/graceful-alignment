@@ -32,8 +32,8 @@ jobs:
           allowUpdates: true # Set this to false if you want to prevent updating existing releases
           artifactErrorsFailBuild: true
           name: ${{ github.event.release.tag_name }}
-          draft: true # ??
-          prerelease: false
+          draft: false # ??
+          prerelease: true
           token: ${{ secrets.RELEASE_TOKEN }}
           artifacts: './module.json, ./module.zip'
           generateReleaseNotes: true
